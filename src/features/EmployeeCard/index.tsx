@@ -1,29 +1,54 @@
+import { FC, useContext } from "react";
+import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
+
+import { Context } from "../../app";
 import { EMPLOYEE_LIST_ROUTE } from "../../pages/paths";
+import { IEmployee } from "../../shared/types/IEmployee";
+
 import { ButtonMore } from "../../shared/ui/buttonMoreStyle";
-import { EmployeeCardContainer, Image } from "./styles";
+import { CardContainer } from "../../shared/ui/ContainersStyle";
+import { Text } from "../../shared/ui/textStyle";
+import { Image } from "./styles";
 
-const EmployeeCard = () => {
-  const navigate = useNavigate();
+const EmployeeCard: FC<{ employee: IEmployee | undefined }> = observer(
+  ({ employee }) => {
+    const eventStore = useContext(Context)?.eventStore;
+    const employeeStore = useContext(Context)?.employeeStore;
 
-  const id = 0;
-  return (
-    <EmployeeCardContainer>
-      <Image alt="employee" />
+    const navigate = useNavigate();
 
-      <header>
-        <h2>name</h2>
-      </header>
+    const getMore = (employee: IEmployee) => {
+      employeeStore?.setCurrentEmployee(employee);
 
-      <main>
-        <p>categoty</p>
-        <p>events</p>
+      navigate(`${EMPLOYEE_LIST_ROUTE}/${employee.id}`);
+    };
 
-        <ButtonMore onClick={() => navigate(`${EMPLOYEE_LIST_ROUTE}/${id}`)}>
-          Больше
-        </ButtonMore>
-      </main>
-    </EmployeeCardContainer>
-  );
-};
+    if (!employee) {
+      return null;
+    }
+
+    return (
+      <CardContainer>
+        <Image
+          alt="employee"
+          src={process.env.REACT_APP_API_URL + employee.img}
+        />
+
+        <header>
+          <h2>
+            {employee.name} {employee.surname}
+          </h2>
+        </header>
+
+        <main>
+          <Text>{employee.category}</Text>
+          <Text>{eventStore?.getNameById(employee.eventId)}</Text>
+
+          <ButtonMore onClick={() => getMore(employee)}>Больше</ButtonMore>
+        </main>
+      </CardContainer>
+    );
+  }
+);
 export default EmployeeCard;

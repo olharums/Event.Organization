@@ -1,15 +1,9 @@
 import styled from "styled-components";
-import { CardListContainer } from "../../shared/ui/cardListContainer";
-
-export const EventContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+import { CardListContainer } from "../../shared/ui/ContainersStyle";
 
 export const Description = styled.p`
   font-size: x-large;
+  padding: 0 5%;
 `;
 
 export const ImageContainer = styled.div`
@@ -29,6 +23,15 @@ export const ImageContainer = styled.div`
       margin: 0;
 
       width: 30%;
+    }
+    @media (max-width: 769px) {
+      margin: 2.5rem 0;
+      width: 70%;
+    }
+
+    @media (max-width: 426px) {
+      margin: 1.5rem 0 0;
+      width: 90%;
     }
   }
 `;

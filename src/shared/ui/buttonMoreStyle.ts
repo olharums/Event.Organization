@@ -10,3 +10,9 @@ export const ButtonMore = styled.button`
     background-color: #77d04f;
   }
 `;
+
+export const ButtonMoreBig = styled(ButtonMore)`
+  width: 30%;
+  height: 100px;
+  margin: 3rem;
+`;

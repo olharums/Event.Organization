@@ -15,4 +15,12 @@ export const ButtonOrderBig = styled(ButtonOrderDefault)`
   width: 30%;
   height: 100px;
   margin: 3rem;
+
+  @media (max-width: 769px) {
+    width: 60%;
+  }
+
+  @media (max-width: 426px) {
+    width: 80%;
+  }
 `;

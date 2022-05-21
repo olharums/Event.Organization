@@ -1,37 +1,67 @@
-import { Card } from "react-bootstrap";
+import { FC, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { EVENT_ROUTE } from "../../pages/paths";
-import { ButtonOrderDefault } from "../../shared/ui/buttonOrderStyle";
-import { ButtonGroup, EventCardContainer, Image } from "./styles";
-import { ButtonMore } from "../../shared/ui/buttonMoreStyle";
+import { observer } from "mobx-react-lite";
 
-const EventCard = () => {
+import { Context } from "../../app";
+import {
+  EVENT_ROUTE,
+  LOGIN_ROUTE,
+  MAKE_AN_ORDER_ROUTE,
+} from "../../pages/paths";
+
+import { ButtonOrderDefault } from "../../shared/ui/buttonOrderStyle";
+import { ButtonMore } from "../../shared/ui/buttonMoreStyle";
+import { Text } from "../../shared/ui/textStyle";
+import { CardContainer } from "../../shared/ui/ContainersStyle";
+import { IEvent } from "../../shared/types/IEvent";
+import { ButtonGroup, Image } from "./styles";
+
+const EventCard: FC<{ event: IEvent }> = observer(({ event }) => {
+  const eventStore = useContext(Context)?.eventStore;
+  const userStore = useContext(Context)?.userStore;
+
   const navigate = useNavigate();
 
-  const id = 0;
+  const getMore = (id: number) => {
+    eventStore?.setCurrentEvent(
+      eventStore.events.find((event) => event.id === id)
+    );
+
+    navigate(`${EVENT_ROUTE}/${id}`);
+  };
+
   return (
-    <EventCardContainer>
-      <header>
-        <h2>name</h2>
-      </header>
+    <CardContainer>
+      <h4>{event.name}</h4>
 
-      <Image alt="event" />
+      <Image alt="event" src={process.env.REACT_APP_API_URL + event.img} />
 
-      <main>
-        <hgroup>
-          <h5>describeaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaa</h5>
-          <h3>price1</h3>
-          <h3>pr2</h3>
-        </hgroup>
+      <Text>
+        Стоимость: <span>{event.price} грн.</span>
+      </Text>
+      <Text>
+        Вместимость: <span>{event.size} человек</span>
+      </Text>
 
-        <ButtonGroup>
-          <ButtonOrderDefault>Заказать</ButtonOrderDefault>
-          <ButtonMore onClick={() => navigate(`${EVENT_ROUTE}/${id}`)}>
-            Больше
-          </ButtonMore>
-        </ButtonGroup>
-      </main>
-    </EventCardContainer>
+      <ButtonGroup>
+        <ButtonOrderDefault
+          onClick={() => {
+            if (userStore?.isAuth) {
+              eventStore?.setCurrentEvent(event);
+              navigate(MAKE_AN_ORDER_ROUTE);
+            } else {
+              navigate(LOGIN_ROUTE);
+            }
+          }}
+        >
+          Заказать
+        </ButtonOrderDefault>
+
+        <ButtonMore onClick={() => getMore(event.id ? event.id : 0)}>
+          Больше
+        </ButtonMore>
+      </ButtonGroup>
+    </CardContainer>
   );
-};
+});
 export default EventCard;

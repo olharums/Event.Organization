@@ -1,10 +1,13 @@
 export interface IEvent {
-  id: number;
+  id?: number;
   name: string;
   price: number;
-  largeSize: boolean;
+  background: string;
   description: string;
-  img: Array<string>;
-  video: string;
-  ticketPrice: number;
+  img: string;
+  imgExample1: string;
+  imgExample2: string;
+  imgExample3: string;
+  size: number;
+  [index: string]: string | number | undefined;
 }

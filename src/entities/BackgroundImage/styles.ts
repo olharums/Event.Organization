@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const BackgroundContainer = styled.div`
-  /* position: absolute; */
   height: 90%;
   width: 100%;
 `;
@@ -10,7 +9,7 @@ export const Image = styled.img`
   position: relative;
   opacity: 0.4;
   width: 100%;
-  height: 100%;
+  height: 95vh;
   z-index: -999;
 `;
 
@@ -29,5 +28,14 @@ export const Content = styled.div`
     justify-content: center;
     align-items: center;
     height: 75vh;
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    span {
+      white-space: nowrap;
+    }
   }
 `;
