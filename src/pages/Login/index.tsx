@@ -68,7 +68,7 @@ const Login: FC = observer(() => {
           />
 
           <AuthText>
-            Нет аккаунта?
+            {"Нет аккаунта? "}
             <NavLink to={REGISTRATION_ROUTE}>Зарегистрироваться!</NavLink>
           </AuthText>
 

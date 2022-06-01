@@ -16,10 +16,9 @@ const Announce: FC = observer(() => {
 
   const isOrders = !!orderStore?.orders?.length;
 
-  const userOrders = orderStore?.orders.filter(
-    (order) => order.userId == userStore?.currentUser?.id
-  );
-
+  const userOrders = orderStore?.orders
+    .filter((order) => order.userId == userStore?.currentUser?.id)
+    .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -45,9 +44,14 @@ const Announce: FC = observer(() => {
           {userOrders?.length ? <h2>Остальные мероприятия</h2> : null}
 
           <CardListContainer>
-            {orderStore?.orders.map((order) => (
-              <OrderCard order={order} key={order.id} />
-            ))}
+            {orderStore?.orders
+              .slice()
+              .sort(
+                (a, b) => Number(new Date(a.date)) - Number(new Date(b.date))
+              )
+              .map((order) => (
+                <OrderCard order={order} key={order.id} />
+              ))}
           </CardListContainer>
         </>
       ) : (

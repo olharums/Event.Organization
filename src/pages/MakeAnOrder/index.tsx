@@ -6,7 +6,7 @@ import { MAIN_ROUTE } from "../paths";
 import { Context } from "../../app";
 import { FormField } from "../../entities/AddRecordModal/styles";
 import SuccessModal from "../../entities/SuccessModal";
-import { createOrder } from "../../shared/api/ordersAPI";
+import { createOrder, fetchOrders } from "../../shared/api/ordersAPI";
 import { ButtonOrderDefault } from "../../shared/ui/buttonOrderStyle";
 import { PageContainer } from "../../shared/ui/ContainersStyle";
 import { Input, Select } from "../../shared/ui/InputStyle";
@@ -18,6 +18,7 @@ const MakeAnOrder = observer(() => {
   const userStore = useContext(Context)?.userStore;
   const employeeStore = useContext(Context)?.employeeStore;
   const taxationStore = useContext(Context)?.taxationStore;
+  const orderStore = useContext(Context)?.orderStore;
 
   const [eventId, setEventId] = useState<number | string>(
     eventStore?.currentEvent?.id || -1
@@ -75,6 +76,9 @@ const MakeAnOrder = observer(() => {
     await createOrder(formData);
 
     setModalShow(true);
+
+    const orders = await fetchOrders();
+    orderStore?.setOrders(orders);
 
     setTimeout(() => {
       setModalShow(false);

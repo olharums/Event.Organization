@@ -179,7 +179,10 @@ const NavBar: FC = observer(() => {
         {userStore?.isAuth ? (
           <NavbarLinkStyled
             to={MAIN_ROUTE}
-            onClick={() => userStore?.setIsAuth(false)}
+            onClick={() => {
+              userStore?.setIsAuth(false);
+              userStore?.setCurrentUser(null);
+            }}
           >
             Выйти
           </NavbarLinkStyled>

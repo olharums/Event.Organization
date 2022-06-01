@@ -13,6 +13,7 @@ import { ITable } from "../../shared/types/ITable";
 
 import { AdminPanel, PageContainer } from "../../shared/ui/ContainersStyle";
 import { ButtonCreation } from "./styles";
+import SuccessModal from "../../entities/SuccessModal";
 
 const Admin: FC = observer(() => {
   const [buttonActivity, setButtonActivity] = useState([
@@ -24,6 +25,7 @@ const Admin: FC = observer(() => {
   ]);
 
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
+  const [successModalShow, setSuccessModalShow] = useState<boolean>(false);
 
   const [table, setTable] = useState<ITable>(getUsers());
 
@@ -89,7 +91,16 @@ const Admin: FC = observer(() => {
       )}
 
       {table.createReport ? (
-        <ButtonCreation onClick={() => table.createReport()}>
+        <ButtonCreation
+          onClick={() => {
+            table.createReport();
+            setSuccessModalShow(true);
+
+            setTimeout(() => {
+              setSuccessModalShow(false);
+            }, 1000);
+          }}
+        >
           Загрузить отчёт
         </ButtonCreation>
       ) : null}
@@ -99,6 +110,8 @@ const Admin: FC = observer(() => {
         addModalShow={addModalShow}
         setAddModalShow={setAddModalShow}
       />
+
+      <SuccessModal modalShow={successModalShow} />
     </PageContainer>
   );
 });

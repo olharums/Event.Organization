@@ -64,7 +64,8 @@ const DataTable: FC<{
             {table.columnNames.map((colName) => (
               <th key={colName}>{colName}</th>
             ))}
-            <th></th>
+
+            {table.tableName !== "users" ? <th></th> : null}
           </tr>
         </thead>
 

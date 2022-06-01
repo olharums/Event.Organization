@@ -6,7 +6,7 @@ export default class UserStore {
   _currentUser: IUser | null = null;
 
   _users: IUser[] = [];
-  _isAuth: boolean = true;
+  _isAuth: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,7 +28,7 @@ export default class UserStore {
     return this._users;
   }
 
-  setCurrentUser(user: IUser) {
+  setCurrentUser(user: IUser | null) {
     this._currentUser = user;
   }
 

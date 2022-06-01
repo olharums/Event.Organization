@@ -134,7 +134,7 @@ const EditRecordModal: FC<IProps> = ({
                 return (
                   <Input
                     key={inputName}
-                    placeholder={valuesDefault[inputName]}
+                    placeholder={valuesDefault[inputName]?.toString()}
                     onChange={(e) => {
                       updateValues(e, inputName);
                     }}

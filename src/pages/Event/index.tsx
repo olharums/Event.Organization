@@ -43,7 +43,7 @@ const Event: FC = observer(() => {
         </h2>
         <h2>
           Возможная стоимость билета:
-          <span>{Math.round(event.price / event.size)} грн.</span>
+          <span> {Math.round(event.price / event.size)} грн.</span>
         </h2>
         <h2>
           Вместимость: <span>{event.size} человек</span>

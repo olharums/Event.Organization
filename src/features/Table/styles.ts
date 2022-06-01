@@ -39,7 +39,9 @@ export const StyledTable = styled.table`
       display: block;
       text-align: left !important;
     }
-
+    td {
+      overflow-wrap: anywhere;
+    }
     thead tr {
       position: absolute;
       top: -9999px;
